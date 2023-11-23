@@ -47,7 +47,7 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
 
 	testImplementation("junit:junit:4.13.1")
 	testImplementation("org.springframework.boot:spring-boot-devtools")

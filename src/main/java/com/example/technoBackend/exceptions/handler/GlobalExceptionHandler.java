@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     private static String getStackTrace(Throwable e) {
         filterStackTracesByProjectPackage(e);
         filterStackTracesByProjectPackage(e.getCause());
-        return ExceptionUtils.getStackTrace(e);
+        return ExceptionUtils.getStackTrace(e).trim();
     }
 
     private static void filterStackTracesByProjectPackage(Throwable ex) {

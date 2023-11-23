@@ -2,7 +2,6 @@ package com.example.technoBackend.controllers;
 
 import com.example.technoBackend.dtos.BlogCreateRequestDto;
 import com.example.technoBackend.dtos.BlogDto;
-import com.example.technoBackend.mappers.BlogMapper;
 import com.example.technoBackend.services.BlogService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.util.List;
 public class BlogController {
 
     private BlogService blogService;
-    private BlogMapper blogMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<BlogDto>> getAllPosts() {
@@ -35,11 +33,19 @@ public class BlogController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<BlogDto> savePost(@RequestBody BlogCreateRequestDto blogCreateRequestDto) {
+    public ResponseEntity<BlogDto> createBlog(@RequestBody BlogCreateRequestDto blogCreateRequestDto) {
         var token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
 
         var result = blogService.saveBlog(blogCreateRequestDto, token.getName());
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @PostMapping("/{id}/add-tag")
+    public ResponseEntity<Void> addTagToBlog(@PathVariable Long id, @RequestParam List<Long> tagIds) {
+        if(tagIds.isEmpty()) throw new IllegalArgumentException("List of tag's id is empty");
+        blogService.addTagsToBlog(id, tagIds);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{id}")
@@ -47,4 +53,11 @@ public class BlogController {
         System.out.println("good?");
         blogService.deleteBlog(id);
     }
+
+//    @GetMapping("/get-by-tag/{tag-name}")
+//    public ResponseEntity<List<BlogDto>> getBlogsByTagName(@PathVariable("tag-name") String tagName){
+//        List<BlogDto> blogs = blogService.getBlogsByTagName(tagName);
+//        return ResponseEntity.ok(blogs);
+//    }
+
 }

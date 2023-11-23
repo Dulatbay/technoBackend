@@ -2,7 +2,6 @@ package com.example.technoBackend.services;
 
 import com.example.technoBackend.dtos.BlogCreateRequestDto;
 import com.example.technoBackend.dtos.BlogDto;
-import com.example.technoBackend.entities.Blog;
 
 import java.util.List;
 
@@ -15,4 +14,7 @@ public interface BlogService {
 
     void deleteBlog(long id);
 
+    void addTagsToBlog(Long id, List<Long> tagIds);
+
+//    List<BlogDto> getBlogsByTagName(String tagName);
 }

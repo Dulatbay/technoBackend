@@ -2,8 +2,6 @@ package com.example.technoBackend.controllers;
 
 import com.example.technoBackend.dtos.CreateTagDto;
 import com.example.technoBackend.dtos.TagDto;
-import com.example.technoBackend.entities.Tag;
-import com.example.technoBackend.mappers.TagMapper;
 import com.example.technoBackend.services.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,8 +35,8 @@ public class TagController {
     public ResponseEntity<TagDto> createTag(@RequestBody CreateTagDto tag) {
         var token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         tag.setAuthorId(token.getName());
-        var savedTag = tagService.saveTag(tag);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedTag);
+        var createdTag = tagService.createTag(tag);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTag);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -16,7 +16,10 @@ public class BlogCustomMapper {
         blog.setTitle(blogCreateRequestDto.getTitle());
         blog.setContent(blogCreateRequestDto.getContent());
         blog.setAuthorId(blogCreateRequestDto.getAuthorId());
-        blog.setTags(tagRepository.findAllById(blogCreateRequestDto.getTagsIds()));
+        var tags = tagRepository.findAllById(blogCreateRequestDto.getTagsIds());
+        if(tags.size() != blogCreateRequestDto.getTagsIds().size())
+            throw new IllegalArgumentException("Could not find all specified tags");
+        blog.setTags(tags);
         return blog;
     }
 }

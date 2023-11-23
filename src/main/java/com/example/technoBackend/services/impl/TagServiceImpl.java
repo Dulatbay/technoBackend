@@ -27,7 +27,8 @@ public class TagServiceImpl implements TagService {
         return tagMapper.toDto(tag);
     }
 
-    public TagDto saveTag(CreateTagDto tag) {
+    public TagDto createTag(CreateTagDto tag) {
+        if(tagRepository.existsByName(tag.getName())) throw new IllegalArgumentException("Field name must be unique");
         var savedEntity = tagRepository.save(tagMapper.toEntity(tag));
         return tagMapper.toDto(savedEntity);
     }

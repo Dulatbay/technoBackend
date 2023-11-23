@@ -5,11 +5,16 @@ import com.example.technoBackend.dtos.TagDto;
 import com.example.technoBackend.entities.Blog;
 import com.example.technoBackend.entities.Tag;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {TagMapper.class})
 public interface BlogMapper extends BaseMapper<Blog, BlogDto> {
+
+
+}
+
 //    @Override
 //    default BlogDto toDto(Blog entity) {
 //        BlogDto blogDto = new BlogDto();
@@ -22,5 +27,3 @@ public interface BlogMapper extends BaseMapper<Blog, BlogDto> {
 //        blogDto.setUpdatedAt(entity.getUpdatedAt());
 //        return blogDto;
 //    }
-
-}

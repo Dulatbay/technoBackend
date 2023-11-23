@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "blog")
+@Table(name = "blog", schema = "schema_techno")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,7 +35,12 @@ public class Blog {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "blog_tag", schema = "schema_techno",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
     private List<Tag> tags;
 
     @PrePersist
