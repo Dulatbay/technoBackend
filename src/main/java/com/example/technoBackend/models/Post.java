@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,8 +23,23 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private Set<PostTag> postTags;
+    @Column(name = "author")
+    private String author;
+    @Column(name = "postDate")
+    private LocalDateTime postDate;
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
+    @ManyToMany
+    private List<Tag> tags;
+
+    @PrePersist
+    public void setPostDate() {
+        this.postDate = LocalDateTime.now();
+    }
+    @PreUpdate
+    public void setLastUpdated() {
+        this.lastUpdate = LocalDateTime.now();
+    }
 
 
 }

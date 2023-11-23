@@ -18,9 +18,16 @@ public class PostService {
     public List<Post> findAll(){
         return postRepository.findAll();
     }
-//    public Post findOne(int id){
-//        Optional<Post> foundPerson = postRepository.findById(id);
-//        return foundPerson.orElse(null);
-//    }
+    public Optional<Post> getPostById(long id){
+        return postRepository.findById(id);
+    }
+    public Post savePost(Post post) {
+        return postRepository.save(post);
+    }
+
+    public void deletePost(long id) {
+        postRepository.deleteById(id);
+    }
+
 
 }

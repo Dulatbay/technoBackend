@@ -3,26 +3,38 @@ package com.example.technoBackend.controllers;
 import com.example.technoBackend.models.Post;
 import com.example.technoBackend.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
+@RequestMapping("/posts")
 public class PostController {
-    private final PostService postService;
+
     @Autowired
-    public PostController(PostService postService){
-        this.postService=postService;
-    }
+    private PostService postService;
 
-    @GetMapping(value = "/posts")
-    public List<Post> getPost(){
-        List<Post> postList = postService.findAll();
-
-        for (Post post : postList)
-            System.out.println(post.getTitle());
-
+    @GetMapping
+    public List<Post> getAllPosts() {
         return postService.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Optional<Post> getPostById(@PathVariable int id) {
+        return postService.getPostById(id);
+    }
+
+    @PostMapping("/post")
+    public Post savePost(@RequestBody Post post) {
+        return postService.savePost(post);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deletePost(@PathVariable long id) {
+        System.out.println("good");
+        postService.deletePost(id);
+    }
+
 }
