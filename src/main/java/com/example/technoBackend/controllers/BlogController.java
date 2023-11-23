@@ -54,10 +54,9 @@ public class BlogController {
         blogService.deleteBlog(id);
     }
 
-//    @GetMapping("/get-by-tag/{tag-name}")
-//    public ResponseEntity<List<BlogDto>> getBlogsByTagName(@PathVariable("tag-name") String tagName){
-//        List<BlogDto> blogs = blogService.getBlogsByTagName(tagName);
-//        return ResponseEntity.ok(blogs);
-//    }
-
+    @GetMapping("/get-by-tag/{tag-name}")
+    public ResponseEntity<List<BlogDto>> getBlogsByTagName(@PathVariable("tag-name") String tagName){
+        List<BlogDto> blogs = blogService.getBlogsByTagName(tagName);
+        return ResponseEntity.ok(blogs);
+    }
 }

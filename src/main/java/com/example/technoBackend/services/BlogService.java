@@ -16,5 +16,5 @@ public interface BlogService {
 
     void addTagsToBlog(Long id, List<Long> tagIds);
 
-//    List<BlogDto> getBlogsByTagName(String tagName);
+    List<BlogDto> getBlogsByTagName(String tagName);
 }

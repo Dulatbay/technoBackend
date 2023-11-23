@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, Long> {
-//    @Query("SELECT b FROM Tag")
-//    List<Blog> getBlogByTag(String tagName);
+    List<Blog> getBlogByTags_Name(String tagName);
 }
