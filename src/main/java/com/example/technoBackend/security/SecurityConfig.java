@@ -54,6 +54,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(HttpMethod.GET, "/**")
                         .permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/**")
+                        .authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/**")
+                        .authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/**")
+                        .authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/**")
+                        .authenticated()
+
                         .anyRequest()
                         .permitAll()
 
