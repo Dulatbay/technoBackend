@@ -1,0 +1,30 @@
+version: "3"
+services:
+  database:
+    container_name: technoparkweb-db
+    image: "postgres"
+    environment:
+      POSTGRES_DB: "technopark"
+      POSTGRES_USER: "key_key_8989"
+      POSTGRES_PASSWORD: "G6JYHrZU"
+    ports:
+      - "5432:5432"
+    networks:
+      - internal
+  keycloak:
+    image: jboss/keycloak
+    container_name: technoparkweb-keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: technopark
+      DB_USER: key_key_8989
+      DB_PASSWORD: G6JYHrZU
+      KEYCLOAK_USER: admin_key_key_8989
+      KEYCLOAK_PASSWORD: admin_password_8989
+    ports:
+      - "8484:8080"
+    depends_on:
+      - postgres
+    links:
+      - "postgres:postgres"

@@ -1,4 +1,4 @@
-package com.example.technoBackend.models;
+package com.example.technoBackend.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,39 +7,44 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="Post")
+@Table(name = "blog")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Blog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "title")
+
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "content")
+
+    @Column(name = "content", nullable = false)
     private String content;
-    @Column(name = "author")
-    private String author;
-    @Column(name = "postDate")
-    private LocalDateTime postDate;
-    @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+
+    @Column(name = "author_id", nullable = false)
+    private String authorId;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @ManyToMany
     private List<Tag> tags;
 
     @PrePersist
     public void setPostDate() {
-        this.postDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
+
     @PreUpdate
     public void setLastUpdated() {
-        this.lastUpdate = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
-
-
 }

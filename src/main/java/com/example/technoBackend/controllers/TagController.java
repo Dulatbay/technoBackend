@@ -1,34 +1,40 @@
 package com.example.technoBackend.controllers;
 
-import com.example.technoBackend.models.Post;
-import com.example.technoBackend.models.Tag;
-import com.example.technoBackend.services.PostService;
-import com.example.technoBackend.services.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.technoBackend.dtos.TagDto;
+import com.example.technoBackend.entities.Tag;
+import com.example.technoBackend.mappers.TagMapper;
+import com.example.technoBackend.services.impl.TagServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @RestController
 @RequestMapping("/tags")
+@AllArgsConstructor
 public class TagController {
 
-    @Autowired
-    private TagService tagService;
+    private TagServiceImpl tagService;
+    private TagMapper tagMapper;
 
-    @GetMapping
-    public List<Tag> getAllTags() {
-        return tagService.findAll();
+    @GetMapping("/all")
+    public ResponseEntity<List<TagDto>> getAllTags() {
+        var tags = tagService.findAll();
+        return ResponseEntity.ok(tagMapper.toDTO(tags));
     }
 
     @GetMapping("/{id}")
-    public Optional<Tag> getTagById(@PathVariable long id) {
-        return tagService.getTagById(id);
+    public ResponseEntity<TagDto> getTagById(@PathVariable long id) {
+        var tag = tagService.getTagById(id);
+        return ResponseEntity.ok(tagMapper.toDto(tag));
     }
 
-    @PostMapping
-    public Tag saveTag(@RequestBody Tag tag) {
-        return tagService.saveTag(tag);
+    @PostMapping("/create")
+    public ResponseEntity<TagDto> saveTag(@RequestBody Tag tag) {
+        var savedTag = tagService.saveTag(tag);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tagMapper.toDto(savedTag));
     }
 
     @DeleteMapping("/delete/{id}")
