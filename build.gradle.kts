@@ -41,6 +41,7 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.5.3.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 
+	implementation("io.micrometer:micrometer-tracing-bridge-brave")
 
 
 	compileOnly("org.projectlombok:lombok")

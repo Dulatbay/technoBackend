@@ -1,7 +1,9 @@
 package com.example.technoBackend.services.impl;
 
-import com.example.technoBackend.entities.Tag;
+import com.example.technoBackend.dtos.CreateTagDto;
+import com.example.technoBackend.dtos.TagDto;
 import com.example.technoBackend.exceptions.DbObjectNotFoundException;
+import com.example.technoBackend.mappers.TagMapper;
 import com.example.technoBackend.repositories.TagRepository;
 import com.example.technoBackend.services.TagService;
 import lombok.RequiredArgsConstructor;
@@ -14,17 +16,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
     private final TagRepository tagRepository;
+    private final TagMapper tagMapper;
 
-    public List<Tag> findAll() {
-        return tagRepository.findAll();
+    public List<TagDto> findAll() {
+        return tagMapper.toDTO(tagRepository.findAll());
     }
 
-    public Tag getTagById(long id) {
-        return tagRepository.findById(id).orElseThrow(() -> new DbObjectNotFoundException(HttpStatus.NOT_FOUND.toString(), "Tag doesn't exist"));
+    public TagDto getTagById(long id) {
+        var tag = tagRepository.findById(id).orElseThrow(() -> new DbObjectNotFoundException(HttpStatus.NOT_FOUND.toString(), "Tag doesn't exist"));
+        return tagMapper.toDto(tag);
     }
 
-    public Tag saveTag(Tag tag) {
-        return tagRepository.save(tag);
+    public TagDto saveTag(CreateTagDto tag) {
+        var savedEntity = tagRepository.save(tagMapper.toEntity(tag));
+        return tagMapper.toDto(savedEntity);
     }
 
     public void deleteTag(long id) {

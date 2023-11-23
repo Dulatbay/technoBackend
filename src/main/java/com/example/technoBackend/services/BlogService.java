@@ -1,16 +1,17 @@
 package com.example.technoBackend.services;
 
+import com.example.technoBackend.dtos.BlogCreateRequestDto;
+import com.example.technoBackend.dtos.BlogDto;
 import com.example.technoBackend.entities.Blog;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BlogService {
-    List<Blog> findAll();
+    List<BlogDto> findAll();
 
-    Blog getBlogById(long id);
+    BlogDto getBlogById(long id);
 
-    Blog saveBlog(Blog blog);
+    BlogDto saveBlog(BlogCreateRequestDto blog, String authorId);
 
     void deleteBlog(long id);
 

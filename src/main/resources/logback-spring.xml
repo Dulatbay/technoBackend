@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+        <target>System.out</target>
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS"} %-5level [%X{traceId}] [%thread] [%logger{36}.%M] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="info" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+</configuration>
