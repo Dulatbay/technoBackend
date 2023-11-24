@@ -1,34 +1,42 @@
 package com.example.technoBackend.controllers;
 
-import com.example.technoBackend.models.Post;
-import com.example.technoBackend.models.Tag;
-import com.example.technoBackend.services.PostService;
+import com.example.technoBackend.dtos.CreateTagDto;
+import com.example.technoBackend.dtos.TagDto;
 import com.example.technoBackend.services.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @RestController
 @RequestMapping("/tags")
+@AllArgsConstructor
 public class TagController {
 
-    @Autowired
     private TagService tagService;
 
-    @GetMapping
-    public List<Tag> getAllTags() {
-        return tagService.findAll();
+    @GetMapping("/all")
+    public ResponseEntity<List<TagDto>> getAllTags() {
+        var tags = tagService.findAll();
+        return ResponseEntity.ok(tags);
     }
 
     @GetMapping("/{id}")
-    public Optional<Tag> getTagById(@PathVariable long id) {
-        return tagService.getTagById(id);
+    public ResponseEntity<TagDto> getTagById(@PathVariable long id) {
+        var tag = tagService.getTagById(id);
+        return ResponseEntity.ok(tag);
     }
 
-    @PostMapping
-    public Tag saveTag(@RequestBody Tag tag) {
-        return tagService.saveTag(tag);
+    @PostMapping("/create")
+    public ResponseEntity<TagDto> createTag(@RequestBody CreateTagDto tag) {
+        var token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        tag.setAuthorId(token.getName());
+        var createdTag = tagService.createTag(tag);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTag);
     }
 
     @DeleteMapping("/delete/{id}")

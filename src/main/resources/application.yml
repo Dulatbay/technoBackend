@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_DOMAIN:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:technoparkweb}
+    username: ${DATABASE_USERNAME:k_app}
+    password: ${DATABASE_PASSWORD:123}
+    driver-class-name: ${DRIVER_CLASS_NAME:org.postgresql.Driver}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH2_ISSUER:http://localhost:8484/auth/realms/technoparkweb}
+          jwk-set-uri: ${OAUTH2_JWK:http://localhost:8484/auth/realms/technoparkweb/protocol/openid-connect/certs}
+
+application:
+  title: Project By TechnoPark
+  version: 1.0.0
