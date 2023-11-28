@@ -10,4 +10,6 @@ public interface TagService {
     TagDto getTagById(long id);
     TagDto createTag(CreateTagDto createTagDto);
     void deleteTag(long id);
+    List<TagDto> getAllTagsWithBlogs();
+
 }

@@ -1,5 +1,6 @@
 package com.example.technoBackend.entities;
 
+import com.example.technoBackend.dtos.BlogDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,4 +26,8 @@ public class Tag {
 
     @Column(name = "author_id", nullable = false)
     private String authorId;
+
+    @ManyToMany(mappedBy = "tags")
+    private List<Blog> blogs;
+
 }

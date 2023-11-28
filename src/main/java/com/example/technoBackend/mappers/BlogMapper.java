@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {TagMapper.class})
+@Mapper(componentModel = "spring")
 public interface BlogMapper extends BaseMapper<Blog, BlogDto> {
 
 

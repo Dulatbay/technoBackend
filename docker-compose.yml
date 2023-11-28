@@ -9,11 +9,12 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: technoparkweb
     ports:
-      - "5432:5432"
+      - "8000:5432"
     restart: unless-stopped
 
   keycloak:
-    image: jboss/keycloak
+#    image: jboss/keycloak
+    image: sleighzy/keycloak
     container_name: technoparkweb-keycloak
     environment:
       DB_VENDOR: POSTGRES

@@ -10,6 +10,7 @@ public interface BlogService {
 
     BlogDto getBlogById(long id);
 
+
     BlogDto saveBlog(BlogCreateRequestDto blog, String authorId);
 
     void deleteBlog(long id);
@@ -17,4 +18,6 @@ public interface BlogService {
     void addTagsToBlog(Long id, List<Long> tagIds);
 
     List<BlogDto> getBlogsByTagName(String tagName);
+
+    void deleteTagFromBlog(long blogId, long tagId);
 }

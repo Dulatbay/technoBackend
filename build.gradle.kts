@@ -25,6 +25,10 @@ repositories {
 }
 
 dependencies {
+	implementation("org.slf4j:slf4j-api:2.0.9")
+
+	testImplementation("ch.qos.logback:logback-classic:1.4.11")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.security:spring-security-web")
@@ -56,6 +60,9 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 	testImplementation("org.testcontainers:junit-jupiter:1.19.1")
 	testImplementation("io.rest-assured:spring-mock-mvc:5.3.2")
+
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("com.mysql:mysql-connector-j")
 
 
 

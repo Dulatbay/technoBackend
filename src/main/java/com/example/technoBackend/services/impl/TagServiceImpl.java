@@ -1,16 +1,23 @@
 package com.example.technoBackend.services.impl;
 
+import com.example.technoBackend.dtos.BlogDto;
 import com.example.technoBackend.dtos.CreateTagDto;
 import com.example.technoBackend.dtos.TagDto;
+import com.example.technoBackend.entities.Blog;
+import com.example.technoBackend.entities.Tag;
 import com.example.technoBackend.exceptions.DbObjectNotFoundException;
 import com.example.technoBackend.mappers.TagMapper;
 import com.example.technoBackend.repositories.TagRepository;
 import com.example.technoBackend.services.TagService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +29,29 @@ public class TagServiceImpl implements TagService {
         return tagMapper.toDTO(tagRepository.findAll());
     }
 
-    public TagDto getTagById(long id) {
-        var tag = tagRepository.findById(id).orElseThrow(() -> new DbObjectNotFoundException(HttpStatus.NOT_FOUND.toString(), "Tag doesn't exist"));
-        return tagMapper.toDto(tag);
-    }
+//    public TagDto getTagById(long id) {
+//        var tag = tagRepository.findById(id).orElseThrow(() -> new DbObjectNotFoundException(HttpStatus.NOT_FOUND.toString(), "Tag doesn't exist"));
+//        return tagMapper.toDto(tag);
+//    }
+@Override
+@Transactional()
+public TagDto getTagById(long id) {
+    Tag tag = tagRepository.findById(id)
+            .orElseThrow(() -> new EmptyResultDataAccessException("Tag not found with ID: " + id,1  ));
+
+//    return mapToDto(tag);
+    return tagMapper.toDto(tag);
+}
+
+//    private TagDto mapToDto(Tag tag) {
+//        TagDto tagDto = new TagDto();
+//        tagDto.setId(tag.getId());
+//        tagDto.setName(tag.getName());
+//        tagDto.setAuthorId(tag.getAuthorId());
+//        // Map blogs if applicable
+//        tagDto.setBlogs(BlogDto.fromEntities(tag.getBlogs()));
+//        return tagDto;
+//    }
 
     public TagDto createTag(CreateTagDto tag) {
         if(tagRepository.existsByName(tag.getName())) throw new IllegalArgumentException("Field name must be unique");
@@ -33,8 +59,23 @@ public class TagServiceImpl implements TagService {
         return tagMapper.toDto(savedEntity);
     }
 
+    @Transactional
     public void deleteTag(long id) {
-        tagRepository.deleteById(id);
+        Tag tagToDelete = tagRepository.findById(id)
+                .orElseThrow(() -> new EmptyResultDataAccessException("Tag not found with ID: " + id,1));
+
+        for (Blog blog : tagToDelete.getBlogs()) {
+            blog.getTags().remove(tagToDelete);
+        }
+
+        tagRepository.delete(tagToDelete);
+    }
+    public List<TagDto> getAllTagsWithBlogs() {
+        List<Tag> tags = tagRepository.findAll();
+//        return tags.stream()
+//                .map(TagDto::fromEntityWithBlogs)
+//                .collect(Collectors.toList());
+        return tagMapper.toDTO(tags);
     }
 }
 

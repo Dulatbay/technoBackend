@@ -6,7 +6,7 @@ import com.example.technoBackend.entities.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface TagMapper extends BaseMapper<Tag, TagDto> {
     default Tag toEntity(CreateTagDto createTagDto) {
         Tag tag = new Tag();

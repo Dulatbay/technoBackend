@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+
 public class BlogCustomMapper {
     private final TagRepository tagRepository;
 
