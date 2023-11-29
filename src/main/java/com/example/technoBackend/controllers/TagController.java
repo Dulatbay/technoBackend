@@ -73,5 +73,9 @@ public class TagController {
 
         return ResponseEntity.ok("Tag deleted successfully");
     }
+//    @GetMapping("/{tag-id}/blogs")
+//    public ResponseEntity<String> getBlogsOfTag(){
+//
+//    }
 }
 
