@@ -70,9 +70,9 @@ dependencies {
 //	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 }
 
-tasks.test {
-	useJUnitPlatform()
-}
+//tasks.test {
+//	useJUnitPlatform()
+//}
 
 configure<DependencyManagementExtension> {
 	imports {

@@ -30,3 +30,14 @@ services:
       - postgres
     links:
       - "postgres:postgres"
+
+  your-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: technoparkweb-app
+    ports:
+        - "8080:8000"
+    depends_on:
+        - postgres
+        - keycloak
