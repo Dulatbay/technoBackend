@@ -8,7 +8,7 @@ RUN gradle clean build
 
 # Stage 2: Run Stage
 FROM openjdk:17-jdk-slim
-ENV DATABASE_DOMAIN=postgres
+
 WORKDIR /app
 COPY --from=build /app/build/libs/technoBackend-0.0.1-SNAPSHOT.jar ./demo-aws.jar
 EXPOSE 8080

@@ -36,6 +36,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: technoparkweb-app
+    environment:
+      DATABASE_DOMAIN: postgres
+      DATABASE_PORT: 5432
     ports:
         - "8080:8000"
     depends_on:
