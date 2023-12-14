@@ -7,7 +7,7 @@ plugins {
 //	id("org.openapi.generator") version "6.3.0"
 }
 
-group = "com.example"
+group = "techno.hub"
 version = "0.0.1-SNAPSHOT"
 
 java {
@@ -65,7 +65,7 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 
 
-
+	implementation("commons-io:commons-io:2.6")
 
 //	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 }

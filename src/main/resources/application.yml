@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DATABASE_DOMAIN:localhost}:${DATABASE_PORT:8000}/${DATABASE_NAME:technoparkweb}
+    url: jdbc:postgresql://${DATABASE_DOMAIN:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:technoparkweb}
     username: ${DATABASE_USERNAME:k_app}
     password: ${DATABASE_PASSWORD:123}
     driver-class-name: ${DRIVER_CLASS_NAME:org.postgresql.Driver}
@@ -12,6 +12,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
     defer-datasource-initialization: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   sql:
     init:
       mode: always

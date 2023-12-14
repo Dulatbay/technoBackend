@@ -9,12 +9,11 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: technoparkweb
     ports:
-      - "8000:5432"
+      - "5432:5432"
     restart: unless-stopped
-
   keycloak:
-#    image: jboss/keycloak
-    image: sleighzy/keycloak
+    image: jboss/keycloak
+#    image: sleighzy/keycloak
     container_name: technoparkweb-keycloak
     environment:
       DB_VENDOR: POSTGRES
@@ -31,16 +30,16 @@ services:
     links:
       - "postgres:postgres"
 
-  your-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: technoparkweb-app
-    environment:
-      DATABASE_DOMAIN: postgres
-      DATABASE_PORT: 5432
-    ports:
-        - "8080:8000"
-    depends_on:
-        - postgres
-        - keycloak
+#  your-app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: technoparkweb-app
+#    environment:
+#      DATABASE_DOMAIN: postgres
+#      DATABASE_PORT: 5432
+#    ports:
+#        - "8080:8000"
+#    depends_on:
+#        - postgres
+#        - keycloak
